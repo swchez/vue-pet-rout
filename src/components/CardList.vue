@@ -6,7 +6,7 @@ import axios from 'axios';
 const router = useRouter();
 const items = ref([]);
 
-const loadPersoneData = ((url = `https://www.swapi.tech/api/people/`)=>{
+const loadPersoneData = ((url = `https://www.swapi.tech/api/people/`)=>{ // поменять на async await
     axios.get(url)
     .then((res)=>{
         items.value.push(...res.data.results);
