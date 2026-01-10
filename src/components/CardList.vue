@@ -37,7 +37,7 @@ const prevPage = () => {
 //function goToDetails(uid){
 //    console.log('переход к персонажу', uid);
 //    router.push(`/people/${uid}`)
-//}
+//} /tetst
 
 onMounted(()=>{
     loadPersoneData(url,page,limit);
