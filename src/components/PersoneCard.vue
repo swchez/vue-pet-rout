@@ -1,13 +1,16 @@
 <script setup>
 import {onMounted, ref,defineEmits} from 'vue';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 const props = defineProps({
     persone : Object
 });
 
-const emit = defineEmits(['open']);
+//const emit = defineEmits(['open']);
 function openDetails(){
-    emit('open', props.persone.uid);
+    console.log('переход к персонажу', props.persone.uid);
+    router.push(`/people/${props.persone.uid}`)
 }
 
 </script>

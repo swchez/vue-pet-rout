@@ -5,23 +5,30 @@ import axios from 'axios';
 const route = useRoute();
 const router = useRouter();
 const persone = ref({});
+const detailUrl = `https://www.swapi.tech/api/people/`
 
 function goBackPage(){
     router.back();
 }
 
-onMounted(()=>{
+onMounted(async()=>{
     const id = route.params.id;
-    axios.get(`https://www.swapi.tech/api/people/${id}`)
-    .then(res => {
+    try {
+        const res = await axios.get(detailUrl+`${id}`);
         persone.value = res.data.result.properties;
-    })
+    } catch (error) {
+        console.log(error,ошибка)
+    }
 })
 </script>
 
 <template>
     <div class="person-data-container">
         <div class="person-data" v-if="persone.name">
+            <!--{{  persone.name }}
+            <div v-for="key in ['gender','mass','skin_color','hair_color','eye_color','height','birth_year']" :key="key" v-if="persone[key]">
+                <p>{{ persone[key] }}</p>
+            </div>-->
             <h2> {{  persone.name }}</h2>
             <p v-if="persone.gender" > Пол: {{ persone.gender }}</p>
             <p v-if="persone.mass" > Масса: {{ persone.mass }}</p>
@@ -33,6 +40,7 @@ onMounted(()=>{
             <button @click="goBackPage" style="font-size: 20px;border-radius: 10px;padding: 10px 10px;">Назад</button>
         </div>
     </div>
+    <pre>{{ persone }}</pre>
 </template>
 
 <style scoped>

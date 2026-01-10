@@ -5,31 +5,54 @@ import PersoneCard from './PersoneCard.vue';
 import axios from 'axios';
 const router = useRouter();
 const items = ref([]);
+const page = ref(1);
+const totalPages = ref(0);
 
-const loadPersoneData = ((url = `https://www.swapi.tech/api/people/`)=>{ // поменять на async await
-    axios.get(url)
-    .then((res)=>{
-        items.value.push(...res.data.results);
-        if(res.data.next) { loadPersoneData(res.data.next)}
-    })
-    .catch( err => {
-        console.log(err, 'ошибка')
-    })
-})
+const url = `https://www.swapi.tech/api/people/`
+
+const loadPersoneData = async(url,page)=>{
+    try{
+        const response = await axios.get(url+`?page=${page.value}`);
+        items.value = response.data.results;
+        totalPages.value = response.data.total_pages;
+    } catch (err) {
+        console.log('Ошибка загрузка данных',err);
+    }
+};
+
+const nextPage = () => {
+    if (page.value < totalPages.value){
+        page.value++;
+        loadPersoneData(url,page);
+    }
+};
+const prevPage = () => {
+    if (page.value > 1){
+        page.value--;
+        loadPersoneData(url,page);
+    }
+}
+
 function goToDetails(uid){
     console.log('переход к персонажу', uid);
     router.push(`/people/${uid}`)
 }
 
 onMounted(()=>{
-    loadPersoneData()
-})
+    loadPersoneData(url,page);
+});
 </script>
 
 <template>
     <div class="card-container">
         <PersoneCard v-for="card in items" :key="card.uid" :persone="card" @open="goToDetails"/>
     </div>
+    <div class="pagination">
+        <span>{{ page }} / {{ totalPages }}</span>
+        <button @click="prevPage" :disabled="page===1">Назад</button>
+        <button @click="nextPage" :disabled="page===totalPages">Вперёд</button>
+    </div>
+
 </template>
 
 <style scoped>
@@ -38,5 +61,39 @@ onMounted(()=>{
         justify-content: center;
         flex-wrap: wrap;
         gap: 20px
+    }
+    .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    font-family: 'Arial', sans-serif;
+    color: #000000;
+    }
+    .pagination span {
+    font-size: 16px;
+    min-width: 40px;
+    text-align: center;
+    color: #000000;
+    }
+    .pagination button {
+    background: #4f4f4f;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    }
+    .pagination button:hover:not(:disabled) {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgb(15, 235, 255);
+    }
+    .pagination button:disabled {
+    background: #555;
+    cursor: not-allowed;  
+    opacity: 0.6;
     }
 </style>
