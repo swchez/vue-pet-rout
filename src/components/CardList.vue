@@ -7,12 +7,13 @@ const router = useRouter();
 const items = ref([]);
 const page = ref(1);
 const totalPages = ref(0);
+const limit = ref(10)
 
 const url = `https://www.swapi.tech/api/people/`
 
-const loadPersoneData = async(url,page)=>{
+const loadPersoneData = async(url,page,limit)=>{
     try{
-        const response = await axios.get(url+`?page=${page.value}`);
+        const response = await axios.get(url+`?page=${page.value}&limit=${limit.value}`);
         items.value = response.data.results;
         totalPages.value = response.data.total_pages;
     } catch (err) {
@@ -23,23 +24,23 @@ const loadPersoneData = async(url,page)=>{
 const nextPage = () => {
     if (page.value < totalPages.value){
         page.value++;
-        loadPersoneData(url,page);
+        loadPersoneData(url,page,limit);
     }
 };
 const prevPage = () => {
     if (page.value > 1){
         page.value--;
-        loadPersoneData(url,page);
+        loadPersoneData(url,page,limit);
     }
 }
 
-function goToDetails(uid){
-    console.log('переход к персонажу', uid);
-    router.push(`/people/${uid}`)
-}
+//function goToDetails(uid){
+//    console.log('переход к персонажу', uid);
+//    router.push(`/people/${uid}`)
+//}
 
 onMounted(()=>{
-    loadPersoneData(url,page);
+    loadPersoneData(url,page,limit);
 });
 </script>
 
