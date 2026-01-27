@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted, ref} from 'vue';
 import { useRouter } from 'vue-router';
-import PersoneCard from './PersoneCard.vue';
+import PersoneCard from '../components/PersoneCard.vue';
 import axios from 'axios';
 const router = useRouter();
 const items = ref([]);
@@ -9,7 +9,7 @@ const page = ref(1);
 const totalPages = ref(0);
 const limit = ref(10)
 
-const url = `https://www.swapi.tech/api/people/`
+const urlPeople = `https://www.swapi.tech/api/people/`
 
 const loadPersoneData = async(url,page,limit)=>{
     try{
@@ -34,13 +34,8 @@ const prevPage = () => {
     }
 }
 
-//function goToDetails(uid){
-//    console.log('переход к персонажу', uid);
-//    router.push(`/people/${uid}`)
-//} /tetst
-
 onMounted(()=>{
-    loadPersoneData(url,page,limit);
+    loadPersoneData(urlPeople,page,limit);
 });
 </script>
 
@@ -68,7 +63,7 @@ onMounted(()=>{
     justify-content: center;
     align-items: center;
     gap: 10px;
-    margin-top: 20px;
+    margin-top: 40px;
     font-family: 'Arial', sans-serif;
     color: #000000;
     }

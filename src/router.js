@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import DetailCardPage from "./components/DetailCardPage.vue"
-import CardList from "./components/CardList.vue";
+import DetailCardPage from "./pages/DetailCardPage.vue"
+import CardList from "./pages/CardList.vue";
 
 export const router = createRouter({
     history : createWebHashHistory(),

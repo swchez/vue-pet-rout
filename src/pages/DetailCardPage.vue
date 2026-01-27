@@ -25,27 +25,19 @@ onMounted(async()=>{
 <template>
     <div class="person-data-container">
         <div class="person-data" v-if="persone.name">
-            <!--{{  persone.name }}
-            <div v-for="key in ['gender','mass','skin_color','hair_color','eye_color','height','birth_year']" :key="key" v-if="persone[key]">
-                <p>{{ persone[key] }}</p>
-            </div>-->
-            <h2> {{  persone.name }}</h2>
-            <p v-if="persone.gender" > Пол: {{ persone.gender }}</p>
-            <p v-if="persone.mass" > Масса: {{ persone.mass }}</p>
-            <p v-if="persone.skin_color" > Цвет кожи: {{ persone.skin_color }}</p>
-            <p v-if="persone.hair_color" > Цвет волос: {{ persone.hair_color }}</p>
-            <p v-if="persone.eye_color" > Цвет глаз: {{ persone.eye_color }}</p>
-            <p v-if="persone.height" > Рост: {{ persone.height }}</p>
-            <p v-if="persone.birth_year" > Год рождения: {{ persone.birth_year }}</p>
+            <h2>{{  persone.name }}</h2>
+            <ul>
+                <li v-for="(value,key) in persone" :key="key">
+                    {{ key }} :{{ value }}>
+                </li>
+            </ul>
             <button @click="goBackPage" style="font-size: 20px;border-radius: 10px;padding: 10px 10px;">Назад</button>
         </div>
     </div>
-    <pre>{{ persone }}</pre>
 </template>
 
 <style scoped>
     .person-data-container {
-        /*display: flex;*/
         justify-content: center;
         align-items: center;
         height: 80vh;
