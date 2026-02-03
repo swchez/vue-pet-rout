@@ -6,31 +6,58 @@ const route = useRoute();
 const router = useRouter();
 const persone = ref({});
 const detailUrl = `https://www.swapi.tech/api/people/`
+const films = ref([]);
+const isLoaded = ref(false);
 
+const loadFilms = async(urls) =>{
+    try {
+        const requests = urls.map( url => axios.get(url));
+        const responses = await Promise.all(requests);
+        films.value = responses.map( response => response.data.result.properties.title);
+    } catch (error) {
+        console.log('Error loading films', error);
+    }
+}
 function goBackPage(){
     router.back();
 }
+const fields = [
+    {name:'Возраст', slug:'birth_year'},
+    {name:'Пол', slug:'gender'},
+    {name:'Цвет кожи', slug:'skin_color'},
+    {name:'Цвет волос', slug:'hair_color'},
+    {name:'Рост', slug:'height'},
+    {name:'Вес', slug:'mass'},
+]
 
 onMounted(async()=>{
     const id = route.params.id;
     try {
         const res = await axios.get(detailUrl+`${id}`);
         persone.value = res.data.result.properties;
+        if (persone.value.films?.length){
+            await loadFilms(persone.value.films)
+        }
+        isLoaded.value = !isLoaded.value;
     } catch (error) {
-        console.log(error,ошибка)
+        console.log('error',ошибка)
     }
 })
 </script>
 
 <template>
     <div class="person-data-container">
-        <div class="person-data" v-if="persone.name">
+        <div class="person-data" v-if="isLoaded">
             <h2>{{  persone.name }}</h2>
-            <ul>
-                <li v-for="(value,key) in persone" :key="key">
-                    {{ key }} :{{ value }}>
-                </li>
-            </ul>
+                <div v-for="field in fields" :key="field.slug">
+                    {{ field.name }} - {{ persone[field.slug] }}
+                </div>
+                <div v-if="films.length">
+                    Фильмы:
+                    <ul>
+                        <li v-for="film in films" :key="film">{{ film }}</li>
+                    </ul>
+                </div>
             <button @click="goBackPage" style="font-size: 20px;border-radius: 10px;padding: 10px 10px;">Назад</button>
         </div>
     </div>
@@ -42,7 +69,6 @@ onMounted(async()=>{
         align-items: center;
         height: 80vh;
     }
-
    .person-data {
         text-align: center;
         font-size: 30px;

@@ -1,7 +1,4 @@
 <script setup>
-import {onMounted, ref} from 'vue';
-import PersoneCard from './components/PersoneCard.vue';
-import CardList from './pages/CardList.vue';
 
 </script>
 

@@ -24,13 +24,13 @@ const loadPersoneData = async(url,page,limit)=>{
 const nextPage = () => {
     if (page.value < totalPages.value){
         page.value++;
-        loadPersoneData(url,page,limit);
+        loadPersoneData(urlPeople,page,limit);
     }
 };
 const prevPage = () => {
     if (page.value > 1){
         page.value--;
-        loadPersoneData(url,page,limit);
+        loadPersoneData(urlPeople,page,limit);
     }
 }
 
@@ -41,7 +41,7 @@ onMounted(()=>{
 
 <template>
     <div class="card-container">
-        <PersoneCard v-for="card in items" :key="card.uid" :persone="card" @open="goToDetails"/>
+        <PersoneCard v-for="card in items" :key="card.uid" :persone="card"/>
     </div>
     <div class="pagination">
         <span>{{ page }} / {{ totalPages }}</span>

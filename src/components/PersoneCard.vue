@@ -7,7 +7,6 @@ const props = defineProps({
     persone : Object
 });
 
-//const emit = defineEmits(['open']);
 function openDetails(){
     console.log('переход к персонажу', props.persone.uid);
     router.push(`/people/${props.persone.uid}`)
