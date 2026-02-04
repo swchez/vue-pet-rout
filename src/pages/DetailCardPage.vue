@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { getPersoneById, getByurl } from '../api/swapi.js'
+//import { getPersoneImagesForPage } from '../api/images.js';
 
 const route = useRoute();
 const router = useRouter();
