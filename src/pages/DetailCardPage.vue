@@ -1,17 +1,17 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import axios from 'axios';
+import { getPersoneById, getByurl } from '../api/swapi.js'
+
 const route = useRoute();
 const router = useRouter();
 const persone = ref({});
-const detailUrl = `https://www.swapi.tech/api/people/`
 const films = ref([]);
 const isLoaded = ref(false);
 
 const loadFilms = async(urls) =>{
     try {
-        const requests = urls.map( url => axios.get(url));
+        const requests = urls.map( url => getByurl(url));
         const responses = await Promise.all(requests);
         films.value = responses.map( response => response.data.result.properties.title);
     } catch (error) {
@@ -33,7 +33,7 @@ const fields = [
 onMounted(async()=>{
     const id = route.params.id;
     try {
-        const res = await axios.get(detailUrl+`${id}`);
+        const res = await getPersoneById(id);
         persone.value = res.data.result.properties;
         if (persone.value.films?.length){
             await loadFilms(persone.value.films)

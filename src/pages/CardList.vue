@@ -2,18 +2,17 @@
 import {onMounted, ref} from 'vue';
 import { useRouter } from 'vue-router';
 import PersoneCard from '../components/PersoneCard.vue';
-import axios from 'axios';
+import { getPersones } from '../api/swapi.js';
 const router = useRouter();
 const items = ref([]);
 const page = ref(1);
 const totalPages = ref(0);
 const limit = ref(10)
 
-const urlPeople = `https://www.swapi.tech/api/people/`
 
-const loadPersoneData = async(url,page,limit)=>{
+const loadPersoneData = async(page,limit)=>{
     try{
-        const response = await axios.get(url+`?page=${page.value}&limit=${limit.value}`);
+        const response = await getPersones(page.value, limit.value);
         items.value = response.data.results;
         totalPages.value = response.data.total_pages;
     } catch (err) {
@@ -24,18 +23,18 @@ const loadPersoneData = async(url,page,limit)=>{
 const nextPage = () => {
     if (page.value < totalPages.value){
         page.value++;
-        loadPersoneData(urlPeople,page,limit);
+        loadPersoneData(page,limit);
     }
 };
 const prevPage = () => {
     if (page.value > 1){
         page.value--;
-        loadPersoneData(urlPeople,page,limit);
+        loadPersoneData(page,limit);
     }
 }
 
 onMounted(()=>{
-    loadPersoneData(urlPeople,page,limit);
+    loadPersoneData(page,limit);
 });
 </script>
 
