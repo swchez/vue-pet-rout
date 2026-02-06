@@ -1,11 +1,17 @@
 <script setup>
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
+const isImageLoaded = ref(false);
 
 const props = defineProps({
     persone: Object,
     image: String
 });
+
+const onImageLoaded = () => {
+    isImageLoaded.value = true;
+}
 
 function openDetails() {
     console.log('переход к персонажу', props.persone.uid);
@@ -20,7 +26,7 @@ function openDetails() {
         <p v-if="persone.gender">Пол : {{ persone.gender }}</p>
         <p v-if="persone.eye_color">Цвет глаз: {{ persone.eye_color }}</p>
         <p v-if="persone.mass">Масса: {{ persone.mass }}</p>
-        <img v-if="image" :src="image" :alt="persone.name" class="card-image" />
+        <img :class="{ hidden: !isImageLoaded }" @load="onImageLoaded" :src="image" :alt="persone.name" class="card-image" />
         <button @click="openDetails" style="font-size: 20px;border-radius: 10px;padding: 10px 10px;">Подробнее</button>
     </div>
 </template>
@@ -39,12 +45,17 @@ function openDetails() {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.hidden {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
 .card-image {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.3s ease;
 }
 </style>

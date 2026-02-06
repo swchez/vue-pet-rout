@@ -2,13 +2,14 @@
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { getPersoneById, getByurl } from '../api/swapi.js'
-//import { getPersoneImagesForPage } from '../api/images.js';
+import { getPersoneImage } from '../api/images.js';
 
 const route = useRoute();
 const router = useRouter();
 const persone = ref({});
 const films = ref([]);
 const isLoaded = ref(false);
+const image = ref('');
 
 const loadFilms = async(urls) =>{
     try {
@@ -40,8 +41,9 @@ onMounted(async()=>{
             await loadFilms(persone.value.films)
         }
         isLoaded.value = !isLoaded.value;
+        image.value = await getPersoneImage(id);
     } catch (error) {
-        console.log('error',ошибка)
+        console.log('ошибка',error)
     }
 })
 </script>
@@ -50,6 +52,7 @@ onMounted(async()=>{
     <div class="person-data-container">
         <div class="person-data" v-if="isLoaded">
             <h2>{{  persone.name }}</h2>
+            <img :src="image" alt="image of persone">
                 <div v-for="field in fields" :key="field.slug">
                     {{ field.name }} - {{ persone[field.slug] }}
                 </div>

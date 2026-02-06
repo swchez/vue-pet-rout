@@ -2,7 +2,7 @@ import axios from "axios";
 const baseUrl = 'https://vieraboschkova.github.io/swapi-gallery/static/assets/img/people/';
 
 const getPersoneImage = (uid) => {
-    return axios.get(`${baseUrl}${uid}.jpg`);
+    return `${baseUrl}${uid}.jpg`;
 }
 
 const getPersoneImagesForPage = async (items) => {
