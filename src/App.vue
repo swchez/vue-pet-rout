@@ -1,20 +1,18 @@
 <script setup>
 import Navigation from './components/Navigation.vue';
-
-
 </script>
 
 <template>
-    <div class="nameHeader">StarWars API</div>
+    <div class='text-4xl font-medium text-black text-center mt-5'>StarWars API</div>
     <Navigation class="nav-block"/>
-    <div class="container">
+    <div class="container-block">
          <router-view />
     </div>
 </template>
 
 <style scoped>
-.container{
-    padding: auto;
+.container-block{
+    padding: 0 0 0 20px;
 }
 .nameHeader{
     text-align: center;

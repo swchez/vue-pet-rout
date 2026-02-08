@@ -27,7 +27,7 @@ function openDetails() {
         <p v-if="persone.eye_color">Цвет глаз: {{ persone.eye_color }}</p>
         <p v-if="persone.mass">Масса: {{ persone.mass }}</p>
         <img :class="{ hidden: !isImageLoaded }" @load="onImageLoaded" :src="image" :alt="persone.name" class="card-image" />
-        <button @click="openDetails" style="font-size: 20px;border-radius: 10px;padding: 10px 10px;">Подробнее</button>
+        <button @click="openDetails" class='border bg-gray-500 px-8 rounded-3xl'>Подробнее</button>
     </div>
 </template>
 
