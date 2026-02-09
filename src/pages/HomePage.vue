@@ -3,14 +3,35 @@ import TitlesHome from '@/components/TitlesHome.vue';
 </script>
 
 <template>
-    <div class="pages">
-        <TitlesHome title="Персонажи" to="/people"></TitlesHome>
+  <div class="relative px-4 py-10">
+
+    <!-- background glows -->
+    <div class="pointer-events-none absolute inset-0">
+      <div class="absolute -top-20 left-1/2 h-64 w-[44rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-cyan-500/15 via-sky-500/10 to-rose-500/10 blur-3xl animate-pulse"></div>
+      <div class="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl"></div>
     </div>
+
+    <div class="relative mx-auto max-w-5xl px-4">
+      <div class="flex flex-col items-center gap-5">
+        <!-- hero text -->
+        <div class="text-center">
+          <h1 class="mt-2 text-3xl font-extrabold tracking-tight text-white">
+            StarWars info
+          </h1>
+          <p class="mt-2 text-sm text-white/70">
+            Выбирай сущность и смотри детальную информацию 
+          </p>
+        </div>
+
+        <!-- action -->
+        <div class="flex items-center justify-center">
+          <TitlesHome title="Персонажи" to="/people" />
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
-.pages{
-    display: flex;
-    justify-content: center;
-}
+/* всё на Tailwind */
 </style>

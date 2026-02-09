@@ -11,74 +11,227 @@ const films = ref([]);
 const isLoaded = ref(false);
 const image = ref('');
 
-const loadFilms = async(urls) =>{
+const loadFilms = async (urls) => {
     try {
-        const requests = urls.map( url => getByurl(url));
+        const requests = urls.map(url => getByurl(url));
         const responses = await Promise.all(requests);
-        films.value = responses.map( response => response.data.result.properties.title);
+        films.value = responses.map(response => response.data.result.properties.title);
     } catch (error) {
         console.log('Error loading films', error);
     }
 }
-function goBackPage(){
+function goBackPage() {
     router.back();
 }
 const fields = [
-    {name:'Возраст', slug:'birth_year'},
-    {name:'Пол', slug:'gender'},
-    {name:'Цвет кожи', slug:'skin_color'},
-    {name:'Цвет волос', slug:'hair_color'},
-    {name:'Рост', slug:'height'},
-    {name:'Вес', slug:'mass'},
+    { name: 'Возраст', slug: 'birth_year' },
+    { name: 'Пол', slug: 'gender' },
+    { name: 'Цвет кожи', slug: 'skin_color' },
+    { name: 'Цвет волос', slug: 'hair_color' },
+    { name: 'Рост', slug: 'height' },
+    { name: 'Вес', slug: 'mass' },
 ]
 
-onMounted(async()=>{
+onMounted(async () => {
     const id = route.params.id;
     try {
         const res = await getPersoneById(id);
         persone.value = res.data.result.properties;
-        if (persone.value.films?.length){
+        if (persone.value.films?.length) {
             await loadFilms(persone.value.films)
         }
         isLoaded.value = !isLoaded.value;
         image.value = await getPersoneImage(id);
     } catch (error) {
-        console.log('ошибка',error)
+        console.log('ошибка', error)
     }
 })
 </script>
 
 <template>
-    <div class="person-data-container">
-        <div class="person-data" v-if="isLoaded">
-            <h2>{{  persone.name }}</h2>
-            <img :src="image" alt="image of persone">
-                <div v-for="field in fields" :key="field.slug">
-                    {{ field.name }} - {{ persone[field.slug] }}
+    <div class="relative px-4 py-10">
+
+        <!-- Glows -->
+        <div class="pointer-events-none absolute inset-0">
+            <div class="absolute -top-28 left-1/2 h-72 w-[44rem] -translate-x-1/2 rounded-full
+               bg-gradient-to-r from-cyan-500/25 via-sky-500/15 to-rose-500/20 blur-3xl
+               animate-pulse" />
+            <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-cyan-400/10 blur-3xl
+               animate-[pulse_4s_ease-in-out_infinite]" />
+            <div class="absolute bottom-10 left-0 h-80 w-80 rounded-full bg-fuchsia-400/10 blur-3xl
+               animate-[pulse_6s_ease-in-out_infinite]" />
+        </div>
+
+        <div class="relative mx-auto max-w-5xl">
+            <!-- Header -->
+            <div class="mb-6 flex items-center justify-between gap-3">
+                <button @click="goBackPage" class="group inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2
+                 text-sm font-semibold text-white/90 backdrop-blur transition
+                 hover:bg-white/10 hover:border-cyan-400/30 active:scale-[0.99]">
+                    <span class="text-base transition group-hover:-translate-x-0.5">←</span>
+                    Назад
+                </button>
+
+                <div class="hidden sm:flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5
+                 text-xs text-white/70 backdrop-blur">
+                    <span
+                        class="inline-block h-2 w-2 rounded-full bg-cyan-400/80 shadow-[0_0_18px_rgba(34,211,238,0.55)]" />
+                    Карточка персонажа
                 </div>
-                <div v-if="films.length">
-                    Фильмы:
-                    <ul>
-                        <li v-for="film in films" :key="film">{{ film }}</li>
-                    </ul>
+            </div>
+
+            <!-- Main glass card -->
+            <div v-if="isLoaded" class="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl
+               shadow-[0_0_0_1px_rgba(255,255,255,0.04),0_30px_90px_-50px_rgba(0,0,0,0.85)]
+               transition hover:border-cyan-400/25">
+                <!-- subtle gradient layer inside card -->
+                <div
+                    class="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-fuchsia-500/10" />
+                <div
+                    class="pointer-events-none absolute -top-24 -right-24 h-56 w-56 rounded-full bg-rose-500/10 blur-3xl" />
+
+                <div class="relative flex flex-col lg:flex-row gap-6 p-6">
+                    <!-- LEFT -->
+                    <div class="flex flex-col items-center lg:w-[340px]">
+                        <h2 class="mb-4 text-center text-3xl font-extrabold tracking-tight text-white
+                     drop-shadow-[0_0_18px_rgba(56,189,248,0.12)]
+                     animate-[fadeInUp_600ms_ease-out]">
+                            {{ persone.name }}
+                        </h2>
+
+                        <div class="w-full overflow-hidden rounded-2xl border border-white/10 bg-black/30
+                     shadow-[0_20px_60px_-35px_rgba(0,0,0,0.9)]
+                     transition hover:scale-[1.01]">
+                            <img :src="image" alt="image of persone"
+                                class="aspect-square w-full object-cover opacity-95 transition duration-300 hover:opacity-100"
+                                loading="lazy" />
+                        </div>
+
+                        <!-- mini info chip -->
+                        <div class="mt-4 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-center backdrop-blur
+                     transition hover:bg-white/10">
+                            <div class="text-xs font-semibold uppercase tracking-wider text-white/50">
+                                Tip
+                            </div>
+                            <div class="mt-1 text-sm text-white/80">
+                                Наведи на карточки — будет glow ✨
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT -->
+                    <div class="flex flex-1 flex-col gap-6">
+                        <!-- Fields -->
+                        <div class="flex flex-wrap gap-4">
+                            <div v-for="field in fields" :key="field.slug" class="group flex min-w-[160px] flex-col rounded-2xl border border-white/10 bg-white/5 px-4 py-3
+                       backdrop-blur transition
+                       hover:bg-white/10 hover:border-cyan-400/25 hover:-translate-y-0.5">
+                                <span class="text-xs uppercase tracking-wide text-white/50">
+                                    {{ field.name }}
+                                </span>
+
+                                <span class="mt-1 text-sm font-semibold text-white/90">
+                                    {{ persone[field.slug] }}
+                                </span>
+
+                                <span class="mt-3 h-[2px] w-10 rounded-full bg-gradient-to-r from-cyan-400/70 via-sky-400/30 to-transparent
+                         opacity-60 transition group-hover:w-16 group-hover:opacity-100" />
+                            </div>
+                        </div>
+
+                        <!-- Films -->
+                        <div v-if="films.length">
+                            <div class="mb-2 text-xs font-semibold uppercase tracking-wide text-white/50">
+                                Фильмы
+                            </div>
+
+                            <div class="flex flex-wrap gap-2">
+                                <span v-for="film in films" :key="film" class="group inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1.5
+                         text-sm text-white/85 backdrop-blur transition
+                         hover:bg-white/10 hover:border-rose-400/25 hover:-translate-y-0.5">
+                                    <span class="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-cyan-400/80
+                               shadow-[0_0_14px_rgba(34,211,238,0.55)]" />
+                                    {{ film }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="mt-auto flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+                            <div class="text-xs text-white/45">
+                                SWAPI
+                            </div>
+
+                            <button @click="goBackPage" class="group relative inline-flex items-center justify-center overflow-hidden
+         rounded-2xl border border-white/10 bg-white/5 px-6 py-3
+         text-sm font-bold text-white backdrop-blur-xl
+         transition-all duration-300
+         hover:-translate-y-0.5 hover:border-cyan-400/30 hover:bg-white/10
+         active:translate-y-0 active:scale-[0.98]">
+                                <!-- Glow layer -->
+                                <span class="pointer-events-none absolute inset-0 opacity-0 transition duration-300
+           group-hover:opacity-100">
+                                    <span
+                                        class="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-sky-400/10 to-rose-400/20 blur-xl" />
+                                </span>
+
+                                <!-- Content -->
+                                <span class="relative flex items-center gap-2">
+                                    <span class="transition group-hover:-translate-x-1">
+                                        ←
+                                    </span>
+                                    Вернуться назад
+                                </span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            <button @click="goBackPage" style="font-size: 20px;border-radius: 10px;padding: 10px 10px;">Назад</button>
+            </div>
+
+            <!-- Loading state -->
+            <div v-else class="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl
+               shadow-[0_0_0_1px_rgba(255,255,255,0.04),0_30px_90px_-50px_rgba(0,0,0,0.85)]">
+                <div class="flex flex-col lg:flex-row gap-6 animate-pulse">
+                    <div class="lg:w-[340px]">
+                        <div class="h-8 w-2/3 rounded-lg bg-white/10"></div>
+                        <div class="mt-4 aspect-square w-full rounded-2xl bg-white/10"></div>
+                        <div class="mt-4 h-16 w-full rounded-2xl bg-white/10"></div>
+                    </div>
+                    <div class="flex-1">
+                        <div class="h-5 w-40 rounded bg-white/10"></div>
+                        <div class="mt-4 flex flex-wrap gap-4">
+                            <div v-for="i in 6" :key="i" class="h-20 w-[180px] rounded-2xl bg-white/10"></div>
+                        </div>
+                        <div class="mt-6 h-5 w-28 rounded bg-white/10"></div>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <div v-for="i in 5" :key="'c' + i" class="h-8 w-28 rounded-full bg-white/10"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Keyframes for heading (pure CSS inside class via arbitrary animation name) -->
+            <!-- Tailwind will accept animate-[fadeInUp_600ms_ease-out] only if keyframes exist.
+           If you don't have custom keyframes in config, убери этот класс — всё остальное останется. -->
         </div>
     </div>
 </template>
 
+
+
 <style scoped>
-    .person-data-container {
-        justify-content: center;
-        align-items: center;
-        height: 80vh;
-    }
-   .person-data {
-        text-align: center;
-        font-size: 30px;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 15px;
-        background-color: rgba(78, 109, 124, 0.2);
+.person-data-container {
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.person-data {
+    text-align: center;
+    font-size: 30px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    background-color: rgba(78, 109, 124, 0.2);
 }
 </style>
