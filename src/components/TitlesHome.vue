@@ -15,7 +15,7 @@ const props = defineProps({
            hover:-translate-y-0.5 hover:bg-white/10 hover:border-cyan-400/30"
   >
     <span class="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
-      <span class="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-sky-400/10 to-rose-400/15 blur-xl"></span>
+      <span class="absolute inset-0 bg-linear-to-r from-cyan-400/20 via-sky-400/10 to-rose-400/15 blur-xl"></span>
     </span>
     <span class="relative">{{ title }}</span>
   </router-link>
