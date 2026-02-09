@@ -2,14 +2,12 @@
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { getPersoneById, getByurl } from '../api/swapi.js'
-import { getPersoneImage } from '../api/images.js';
 
 const route = useRoute();
 const router = useRouter();
 const persone = ref({});
 const films = ref([]);
 const isLoaded = ref(false);
-const image = ref('');
 
 const loadFilms = async (urls) => {
     try {
@@ -41,7 +39,6 @@ onMounted(async () => {
             await loadFilms(persone.value.films)
         }
         isLoaded.value = !isLoaded.value;
-        image.value = await getPersoneImage(id);
     } catch (error) {
         console.log('ошибка', error)
     }
@@ -102,7 +99,7 @@ onMounted(async () => {
                         <div class="w-full overflow-hidden rounded-2xl border border-white/10 bg-black/30
                      shadow-[0_20px_60px_-35px_rgba(0,0,0,0.9)]
                      transition hover:scale-[1.01]">
-                            <img :src="image" alt="image of persone"
+                            <img :src="`https://vieraboschkova.github.io/swapi-gallery/static/assets/img/people/${route.params.id}.jpg`" alt="image of persone"
                                 class="aspect-square w-full object-cover opacity-95 transition duration-300 hover:opacity-100"
                                 loading="lazy" />
                         </div>
@@ -220,18 +217,5 @@ onMounted(async () => {
 
 
 <style scoped>
-.person-data-container {
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
-}
 
-.person-data {
-    text-align: center;
-    font-size: 30px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 15px;
-    background-color: rgba(78, 109, 124, 0.2);
-}
 </style>

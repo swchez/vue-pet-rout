@@ -1,17 +1,10 @@
 <script setup>
-import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
-const isImageLoaded = ref(false);
 
 const props = defineProps({
-    persone: Object,
-    image: String
+    persone: Object
 });
-
-const onImageLoaded = () => {
-    isImageLoaded.value = true;
-}
 
 function openDetails() {
     console.log('переход к персонажу', props.persone.uid);

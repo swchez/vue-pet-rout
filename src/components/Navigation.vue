@@ -19,8 +19,8 @@ import { RouterLink } from 'vue-router';
 
       <!-- active underline -->
       <span
-        class="pointer-events-none absolute -bottom-1 left-1/2 h-[2px] w-0 -translate-x-1/2 rounded-full
-               bg-gradient-to-r from-cyan-400/80 via-sky-400/40 to-rose-400/60
+        class="pointer-events-none absolute -bottom-1 left-1/2 h-0.5 w-0 -translate-x-1/2 rounded-full
+               bg-linear-to-r from-cyan-400/80 via-sky-400/40 to-rose-400/60
                transition-all duration-300
                group-[.router-link-active]:w-3/4"
       />
@@ -38,8 +38,8 @@ import { RouterLink } from 'vue-router';
 
       <!-- active underline -->
       <span
-        class="pointer-events-none absolute -bottom-1 left-1/2 h-[2px] w-0 -translate-x-1/2 rounded-full
-               bg-gradient-to-r from-cyan-400/80 via-sky-400/40 to-rose-400/60
+        class="pointer-events-none absolute -bottom-1 left-1/2 h-0.5 w-0 -translate-x-1/2 rounded-full
+               bg-linear-to-r from-cyan-400/80 via-sky-400/40 to-rose-400/60
                transition-all duration-300
                group-[.router-link-active]:w-3/4"
       />

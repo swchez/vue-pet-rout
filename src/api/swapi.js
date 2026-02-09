@@ -5,7 +5,7 @@ const peopleUrl = `${baseUrl}/people/`;
 const filmsUrl = `${baseUrl}/films/`;
 const planetUrl = `${baseUrl}/planets/`;
 
-
+// персонажи
 const getPersoneById = (id) => {
     return axios.get(`${peopleUrl}${id}`);
 };
@@ -17,14 +17,25 @@ const getPersones = (page,limit) => {
         }
     });
 };
+//планеты
+const getPlanetsById = (id) => {
+    return axios.get(`${planetUrl}${id}`);
+};
+const getPlanets = (page,limit) => {
+    return axios.get(planetUrl,{
+        params: {
+            page,
+            limit
+        }
+    });
+};
+//фильмы
 const getFilms = (url) => {
     return axios.get(`${filmsUrl}${url}`);
 };
-const getPlanets = (url) => {
-    return axios.get(`${planetUrl}${url}`);
-};
+//урл
 const getByurl = (url) => {
     return axios.get(url);
 }
 
-export { getPersones, getPersoneById, getFilms, getPlanets, getByurl }
+export { getPersones, getPersoneById, getFilms, getPlanets, getByurl, getPlanetsById }

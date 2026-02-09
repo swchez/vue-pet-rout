@@ -3,13 +3,11 @@ import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import PersoneCard from '../components/PersoneCard.vue';
 import { getPersones } from '../api/swapi.js';
-import { getPersoneImagesForPage } from '../api/images.js';
 const router = useRouter();
 const items = ref([]);
 const page = ref(1);
 const totalPages = ref(0);
 const limit = ref(10)
-const images = ref([]);
 const isLoaded = ref(false);
 
 
@@ -20,7 +18,6 @@ const loadPersoneData = async (page, limit) => {
         items.value = response.data.results;
         totalPages.value = response.data.total_pages;
         console.log(items.value);
-        images.value = await getPersoneImagesForPage(items.value);
         isLoaded.value = true;
     } catch (err) {
         console.log('Ошибка загрузка данных', err);
@@ -69,8 +66,8 @@ onMounted(() => {
 
       <!-- REAL CARDS -->
       <div v-else class="flex flex-wrap justify-center gap-6">
-        <div v-for="(persone, index) in items" :key="persone.uid" class="w-full sm:w-[320px]">
-          <PersoneCard :persone="persone" :image="images[index]" />
+        <div v-for="persone in items" :key="persone.uid" class="w-full sm:w-[320px]">
+          <PersoneCard :persone="persone"/>
         </div>
       </div>
 

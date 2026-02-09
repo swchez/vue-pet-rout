@@ -7,7 +7,7 @@ import TitlesHome from '@/components/TitlesHome.vue';
 
     <!-- background glows -->
     <div class="pointer-events-none absolute inset-0">
-      <div class="absolute -top-20 left-1/2 h-64 w-[44rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-cyan-500/15 via-sky-500/10 to-rose-500/10 blur-3xl animate-pulse"></div>
+      <div class="absolute -top-20 left-1/2 h-64 w-176 -translate-x-1/2 rounded-full bg-linear-to-r from-cyan-500/15 via-sky-500/10 to-rose-500/10 blur-3xl animate-pulse"></div>
       <div class="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl"></div>
     </div>
 
