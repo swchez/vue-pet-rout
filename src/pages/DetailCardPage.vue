@@ -53,8 +53,8 @@ onMounted(async () => {
 
         <!-- Glows -->
         <div class="pointer-events-none absolute inset-0">
-            <div class="absolute -top-28 left-1/2 h-72 w-[44rem] -translate-x-1/2 rounded-full
-               bg-gradient-to-r from-cyan-500/25 via-sky-500/15 to-rose-500/20 blur-3xl
+            <div class="absolute -top-28 left-1/2 h-72 w-176 -translate-x-1/2 rounded-full
+               bg-linear-to-r from-cyan-500/25 via-sky-500/15 to-rose-500/20 blur-3xl
                animate-pulse" />
             <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-cyan-400/10 blur-3xl
                animate-[pulse_4s_ease-in-out_infinite]" />
@@ -86,13 +86,13 @@ onMounted(async () => {
                transition hover:border-cyan-400/25">
                 <!-- subtle gradient layer inside card -->
                 <div
-                    class="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-fuchsia-500/10" />
+                    class="pointer-events-none absolute inset-0 bg-linear-to-br from-cyan-500/10 via-transparent to-fuchsia-500/10" />
                 <div
                     class="pointer-events-none absolute -top-24 -right-24 h-56 w-56 rounded-full bg-rose-500/10 blur-3xl" />
 
                 <div class="relative flex flex-col lg:flex-row gap-6 p-6">
                     <!-- LEFT -->
-                    <div class="flex flex-col items-center lg:w-[340px]">
+                    <div class="flex flex-col items-center lg:w-85">
                         <h2 class="mb-4 text-center text-3xl font-extrabold tracking-tight text-white
                      drop-shadow-[0_0_18px_rgba(56,189,248,0.12)]
                      animate-[fadeInUp_600ms_ease-out]">
@@ -123,7 +123,7 @@ onMounted(async () => {
                     <div class="flex flex-1 flex-col gap-6">
                         <!-- Fields -->
                         <div class="flex flex-wrap gap-4">
-                            <div v-for="field in fields" :key="field.slug" class="group flex min-w-[160px] flex-col rounded-2xl border border-white/10 bg-white/5 px-4 py-3
+                            <div v-for="field in fields" :key="field.slug" class="group flex min-w-40 flex-col rounded-2xl border border-white/10 bg-white/5 px-4 py-3
                        backdrop-blur transition
                        hover:bg-white/10 hover:border-cyan-400/25 hover:-translate-y-0.5">
                                 <span class="text-xs uppercase tracking-wide text-white/50">
@@ -134,7 +134,7 @@ onMounted(async () => {
                                     {{ persone[field.slug] }}
                                 </span>
 
-                                <span class="mt-3 h-[2px] w-10 rounded-full bg-gradient-to-r from-cyan-400/70 via-sky-400/30 to-transparent
+                                <span class="mt-3 h-0.5 w-10 rounded-full bg-linear-to-r from-cyan-400/70 via-sky-400/30 to-transparent
                          opacity-60 transition group-hover:w-16 group-hover:opacity-100" />
                             </div>
                         </div>
@@ -172,7 +172,7 @@ onMounted(async () => {
                                 <span class="pointer-events-none absolute inset-0 opacity-0 transition duration-300
            group-hover:opacity-100">
                                     <span
-                                        class="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-sky-400/10 to-rose-400/20 blur-xl" />
+                                        class="absolute inset-0 bg-linear-to-r from-cyan-400/20 via-sky-400/10 to-rose-400/20 blur-xl" />
                                 </span>
 
                                 <!-- Content -->
@@ -192,7 +192,7 @@ onMounted(async () => {
             <div v-else class="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl
                shadow-[0_0_0_1px_rgba(255,255,255,0.04),0_30px_90px_-50px_rgba(0,0,0,0.85)]">
                 <div class="flex flex-col lg:flex-row gap-6 animate-pulse">
-                    <div class="lg:w-[340px]">
+                    <div class="lg:w-85">
                         <div class="h-8 w-2/3 rounded-lg bg-white/10"></div>
                         <div class="mt-4 aspect-square w-full rounded-2xl bg-white/10"></div>
                         <div class="mt-4 h-16 w-full rounded-2xl bg-white/10"></div>
@@ -200,7 +200,7 @@ onMounted(async () => {
                     <div class="flex-1">
                         <div class="h-5 w-40 rounded bg-white/10"></div>
                         <div class="mt-4 flex flex-wrap gap-4">
-                            <div v-for="i in 6" :key="i" class="h-20 w-[180px] rounded-2xl bg-white/10"></div>
+                            <div v-for="i in 6" :key="i" class="h-20 w-45 rounded-2xl bg-white/10"></div>
                         </div>
                         <div class="mt-6 h-5 w-28 rounded bg-white/10"></div>
                         <div class="mt-3 flex flex-wrap gap-2">

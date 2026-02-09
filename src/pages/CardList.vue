@@ -49,8 +49,8 @@ onMounted(() => {
     <!-- background glows -->
     <div class="pointer-events-none absolute inset-0">
       <div
-        class="absolute -top-24 left-1/2 h-64 w-[44rem] -translate-x-1/2 rounded-full
-               bg-gradient-to-r from-cyan-500/20 via-sky-500/10 to-rose-500/15 blur-3xl animate-pulse"
+        class="absolute -top-24 left-1/2 h-64 w-176 -translate-x-1/2 rounded-full
+               bg-linear-to-r from-cyan-500/20 via-sky-500/10 to-rose-500/15 blur-3xl animate-pulse"
       ></div>
       <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-cyan-400/10 blur-3xl"></div>
     </div>
@@ -92,7 +92,7 @@ onMounted(() => {
                  disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:translate-y-0"
         >
           <span class="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
-            <span class="absolute inset-0 bg-gradient-to-r from-cyan-400/15 via-sky-400/10 to-transparent blur-xl"></span>
+            <span class="absolute inset-0 bg-linear-to-r from-cyan-400/15 via-sky-400/10 to-transparent blur-xl"></span>
           </span>
           <span class="relative flex items-center gap-2">← Назад</span>
         </button>
@@ -107,7 +107,7 @@ onMounted(() => {
                  disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:translate-y-0"
         >
           <span class="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
-            <span class="absolute inset-0 bg-gradient-to-r from-transparent via-sky-400/10 to-rose-400/15 blur-xl"></span>
+            <span class="absolute inset-0 bg-linear-to-r from-transparent via-sky-400/10 to-rose-400/15 blur-xl"></span>
           </span>
           <span class="relative flex items-center gap-2">Вперёд →</span>
         </button>
