@@ -30,6 +30,7 @@ import TitlesHome from '@/components/TitlesHome.vue';
       <div class="mt-10 flex flex-wrap justify-center gap-6">
         <TitlesHome title="Персонажи" to="/people" />
         <TitlesHome title="Планеты" to="/planet" />
+        <TitlesHome title="Транспорт" to="/vehicle" />
       </div>
     </div>
   </div>

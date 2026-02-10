@@ -4,6 +4,8 @@ import PeoplPage from "./pages/PeoplePage.vue";
 import HomePage from "./pages/HomePage.vue";
 import PlanetsPage from "./pages/PlanetsPage.vue";
 import PlanetDetailPage from "./pages/PlanetDetailPage.vue";
+import VehicleDetailPage from "./pages/VehicleDetailPage.vue";
+import VehiclePage from "./pages/VehiclePage.vue";
 
 export const router = createRouter({
     history : createWebHashHistory(),
@@ -14,5 +16,7 @@ export const router = createRouter({
         { path: '/people/:id', component: PeopleDetailPage, props: true },
         { path: '/planet', component: PlanetsPage },
         { path: '/planet/:id', component: PlanetDetailPage },
+        { path: '/vehicle/', component: VehiclePage },
+        { path: '/vehicle/:id', component: VehicleDetailPage }
     ]
 });

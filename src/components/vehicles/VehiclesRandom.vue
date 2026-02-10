@@ -1,37 +1,39 @@
 <script setup>
-import { getPlanetById } from '../../api/swapi.js';
+import { getVehicleById } from '../../api/swapi.js';
 import { ref, onMounted } from 'vue';
-const totalCount = ref(60);
+const totalCount = ref(39);
 const currentId = ref();
-const currentPlanet = ref({});
+const currentVehicle = ref({});
 const counter = ref(0);
 const isLoading = ref(true);
 
 const fields = [
-    { name: 'Климат', slug: 'climate' },
-    { name: 'Диаметр', slug: 'diameter' },
-    { name: 'Местность', slug: 'terrain' },
-    { name: 'Гравитация', slug: 'gravity' },
-    { name: 'Население', slug: 'population' },
-    { name: 'Орбитальный период', slug: 'orbital_period' },
+    { name: 'Грузоподъемность', slug: 'cargo_capacity' },
+    { name: 'Пассажирских мест', slug: 'passengers' },
+    { name: 'Максимальная атмосферная скорость', slug: 'max_atmosphering_speed' },
+    { name: 'Количество экипажа', slug: 'crew' },
+    { name: 'Длина', slug: 'length' },
+    { name: 'Цена в кредитах', slug: 'cost_in_credits' },
+    { name: 'Производство', slug: 'manufacturer' },
+    { name: 'Транспортный класс', slug: 'vehicle_class' },
 ]
 
 const getRandomid = () => {
     return currentId.value = Math.floor(Math.random()*totalCount.value+1);
 }
 
-const getRandomPlanet = async (id) => {
+const getRandomVehicle = async (id) => {
     try {
-        const res = await getPlanetById(id);
-        currentPlanet.value = res.data.result.properties;
-        console.log(currentPlanet)
+        const res = await getVehicleById(id);
+        currentVehicle.value = res.data.result.properties;
+        console.log(currentVehicle)
         counter.value = 0;
         isLoading.value = false;
     } catch (error) {
         if ( error.response && error.response.status === 404 && counter.value<5 ){
             counter.value++;
             getRandomid();
-            getRandomPlanet(currentId.value)
+            getRandomVehicle(currentId.value)
         } else {
             console.log(error,'ошибка')
         }
@@ -40,11 +42,11 @@ const getRandomPlanet = async (id) => {
 
 const RefreshRandom = () => {
     isLoading.value = true;
-    getRandomPlanet(getRandomid());
+    getRandomVehicle(getRandomid());
 }
 
 onMounted(async()=>{
-    await getRandomPlanet(getRandomid());
+    await getRandomVehicle(getRandomid());
 })
 
 </script>
@@ -74,16 +76,18 @@ onMounted(async()=>{
       </div>
 
       <div class="flex flex-col md:flex-row md:items-center gap-6">
-        <!-- IMAGE PLACEHOLDER -->
-        <div class="flex justify-center md:w-50 shrink-0">
+        <div class="flex justify-center md:w-50">
           <div class="h-36 w-36 rounded-full bg-white/10"></div>
         </div>
 
-        <!-- INFO PLACEHOLDER -->
         <div class="flex-1 space-y-3">
           <div class="h-4 w-48 rounded bg-white/10"></div>
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            <div v-for="i in 6" :key="i" class="h-12 rounded-xl bg-white/10"></div>
+            <div
+              v-for="i in 6"
+              :key="i"
+              class="h-12 rounded-xl bg-white/10"
+            ></div>
           </div>
         </div>
       </div>
@@ -91,7 +95,7 @@ onMounted(async()=>{
 
     <!-- RANDOM CARD -->
     <div
-      v-else-if="Object.keys(currentPlanet).length"
+      v-else-if="Object.keys(currentVehicle).length"
       class="relative mx-auto max-w-3xl rounded-3xl
              border border-white/10 bg-white/5 p-5 backdrop-blur-xl
              shadow-[0_25px_70px_-45px_rgba(0,0,0,0.85)]"
@@ -100,7 +104,7 @@ onMounted(async()=>{
       <div class="mb-4 flex items-center justify-between gap-3">
         <div>
           <h2 class="text-xl font-extrabold text-white">
-            Случайная планета
+            Случайный транспорт
           </h2>
           <p class="mt-1 text-xs text-white/60">
             ID: {{ currentId }}
@@ -127,26 +131,25 @@ onMounted(async()=>{
         </button>
       </div>
 
-      <!-- CONTENT ROW -->
       <div class="flex flex-col md:flex-row md:items-center gap-6">
-        <!-- IMAGE (LEFT + CENTERED) -->
+        <!-- IMAGE -->
         <div class="flex justify-center md:w-50 shrink-0">
           <div
             class="h-36 w-36 overflow-hidden rounded-full border border-white/10 bg-black/30
                    shadow-[0_16px_40px_-30px_rgba(0,0,0,0.9)]"
           >
             <img
-              src="../../assets/PlanetImage.png"
-              :alt="currentPlanet.name"
+              src="../../assets/VehicleImage.png"
+              :alt="currentVehicle.name"
               class="h-full w-full object-cover opacity-95"
             />
           </div>
         </div>
 
-        <!-- INFO (RIGHT) -->
+        <!-- INFO -->
         <div class="flex flex-1 flex-col gap-3">
           <h3 class="text-lg font-semibold text-white text-center md:text-left">
-            {{ currentPlanet.name }}
+            {{ currentVehicle.name }}
           </h3>
 
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -160,7 +163,7 @@ onMounted(async()=>{
                 {{ field.name }}
               </div>
               <div class="text-sm font-semibold text-white/90">
-                {{ currentPlanet[field.slug] }}
+                {{ currentVehicle[field.slug] }}
               </div>
             </div>
           </div>
@@ -174,11 +177,10 @@ onMounted(async()=>{
       class="mx-auto max-w-3xl rounded-3xl border border-white/10 bg-white/5 p-5
              text-center text-white/60 backdrop-blur-xl"
     >
-      Не удалось загрузить планету
+      Не удалось загрузить транспорт
     </div>
   </div>
 </template>
-
 
 
 <style scoped>
