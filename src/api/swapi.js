@@ -18,7 +18,7 @@ const getPersones = (page,limit) => {
     });
 };
 //планеты
-const getPlanetsById = (id) => {
+const getPlanetById = (id) => {
     return axios.get(`${planetUrl}${id}`);
 };
 const getPlanets = (page,limit) => {
@@ -38,4 +38,4 @@ const getByurl = (url) => {
     return axios.get(url);
 }
 
-export { getPersones, getPersoneById, getFilms, getPlanets, getByurl, getPlanetsById }
+export { getPersones, getPersoneById, getFilms, getPlanets, getByurl, getPlanetById }
