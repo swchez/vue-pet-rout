@@ -54,7 +54,7 @@ onMounted(async()=>{
     <!-- glow background -->
     <div class="pointer-events-none absolute inset-0">
       <div
-        class="absolute -top-16 left-1/2 h-44 w-[28rem] -translate-x-1/2 rounded-full
+        class="absolute -top-16 left-1/2 h-44 w-md -translate-x-1/2 rounded-full
                bg-linear-to-r from-cyan-500/20 via-sky-500/10 to-rose-500/15 blur-3xl animate-pulse"
       ></div>
     </div>
@@ -74,7 +74,7 @@ onMounted(async()=>{
       </div>
 
       <div class="flex flex-col md:flex-row md:items-center gap-6">
-        <div class="flex justify-center md:w-[200px]">
+        <div class="flex justify-center md:w-50">
           <div class="h-36 w-36 rounded-full bg-white/10"></div>
         </div>
 
@@ -131,7 +131,7 @@ onMounted(async()=>{
 
       <div class="flex flex-col md:flex-row md:items-center gap-6">
         <!-- IMAGE -->
-        <div class="flex justify-center md:w-[200px] shrink-0">
+        <div class="flex justify-center md:w-50 shrink-0">
           <div
             class="h-36 w-36 overflow-hidden rounded-full border border-white/10 bg-black/30
                    shadow-[0_16px_40px_-30px_rgba(0,0,0,0.9)]"

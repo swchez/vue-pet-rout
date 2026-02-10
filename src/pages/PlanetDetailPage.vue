@@ -37,7 +37,7 @@ onMounted(async () => {
     <!-- Glows -->
     <div class="pointer-events-none absolute inset-0">
       <div
-        class="absolute -top-28 left-1/2 h-72 w-[44rem] -translate-x-1/2 rounded-full
+        class="absolute -top-28 left-1/2 h-72 w-176 -translate-x-1/2 rounded-full
                bg-linear-to-r from-cyan-500/25 via-sky-500/15 to-rose-500/20 blur-3xl animate-pulse"
       />
       <div
@@ -91,7 +91,7 @@ onMounted(async () => {
 
         <div class="relative flex flex-col gap-6 p-6 lg:flex-row">
           <!-- LEFT -->
-          <div class="flex flex-col items-center lg:w-[340px]">
+          <div class="flex flex-col items-center lg:w-85">
             <h2
               class="mb-4 text-center text-3xl font-extrabold tracking-tight text-white
                      drop-shadow-[0_0_18px_rgba(56,189,248,0.12)]"
@@ -190,7 +190,7 @@ onMounted(async () => {
                shadow-[0_0_0_1px_rgba(255,255,255,0.04),0_30px_90px_-50px_rgba(0,0,0,0.85)]"
       >
         <div class="flex flex-col gap-6 animate-pulse lg:flex-row">
-          <div class="lg:w-[340px]">
+          <div class="lg:w-85">
             <div class="h-8 w-2/3 rounded-lg bg-white/10"></div>
             <div class="mt-4 aspect-square w-full rounded-2xl bg-white/10"></div>
             <div class="mt-4 h-16 w-full rounded-2xl bg-white/10"></div>
