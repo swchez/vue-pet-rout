@@ -54,7 +54,7 @@ onMounted(() => {
     <!-- background glows -->
     <div class="pointer-events-none absolute inset-0">
       <div
-        class="absolute -top-24 left-1/2 h-64 w-[44rem] -translate-x-1/2 rounded-full
+        class="absolute -top-24 left-1/2 h-64 w-176 -translate-x-1/2 rounded-full
                bg-linear-to-r from-cyan-500/20 via-sky-500/10 to-rose-500/15 blur-3xl animate-pulse"
       ></div>
       <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-cyan-400/10 blur-3xl"></div>
