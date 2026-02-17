@@ -14,8 +14,9 @@ export const router = createRouter({
         { path: '/home', component: HomePage },
         { path: '/people', redirect: '/people/page/1' },
         { path: '/people/page/:page', component: PeoplePage },
-        { path: '/people/:id', component: PeopleDetailPage, props: true },
-        { path: '/planet', component: PlanetsPage },
+        { path: '/people/:id', component: PeopleDetailPage },
+        { path: '/planet', redirect: '/planet/page/1' },
+        { path: '/planet/page/:page', component: PlanetsPage },
         { path: '/planet/:id', component: PlanetDetailPage },
         { path: '/vehicle', component: VehiclePage },
         { path: '/vehicle/:id', component: VehicleDetailPage }
