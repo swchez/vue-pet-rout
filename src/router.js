@@ -18,7 +18,8 @@ export const router = createRouter({
         { path: '/planet', redirect: '/planet/page/1' },
         { path: '/planet/page/:page', component: PlanetsPage },
         { path: '/planet/:id', component: PlanetDetailPage },
-        { path: '/vehicle', component: VehiclePage },
+        { path: '/vehicle', redirect:'/vehicle/page/1' },
+        { path: '/vehicle/page/:page', component: VehiclePage },
         { path: '/vehicle/:id', component: VehicleDetailPage }
     ]
 });

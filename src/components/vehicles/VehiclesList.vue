@@ -1,12 +1,14 @@
 <script setup>
 import { getVehicles } from '../../api/swapi.js';
-import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { onMounted, ref, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import Pagination from '../Pagination.vue';
 
+const route = useRoute();
 const router = useRouter();
 const items = ref([]);
 const page = ref(1);
-const totalPages = ref(0);
+const total = ref();
 const limit = ref(10)
 const isLoaded = ref(false);
 
@@ -15,9 +17,9 @@ const isLoaded = ref(false);
 const loadVehicleData = async (page, limit) => {
     isLoaded.value = false;
     try {
-        const response = await getVehicles(page.value, limit.value);
+        const response = await getVehicles(page, limit);
         items.value = response.data.results;
-        totalPages.value = response.data.total_pages;
+        total.value = response.data.total_records;
         console.log(items.value);
         isLoaded.value = true;
     } catch (err) {
@@ -29,22 +31,14 @@ function openDetails(id) {
     console.log('переход к транспорту', id);
     router.push(`/vehicle/${id}`)
 }
-
-const nextPage = () => {
-    if (page.value < totalPages.value) {
-        page.value++;
-        loadVehicleData(page, limit);
-    }
-};
-const prevPage = () => {
-    if (page.value > 1) {
-        page.value--;
-        loadVehicleData(page, limit);
-    }
-}
+watch(()=> route.params.page, (NewPage)=>{
+    page.value = +NewPage || 1
+    loadVehicleData(+NewPage || 1, limit.value)
+})
 
 onMounted(() => {
-    loadVehicleData(page, limit);
+    page.value = +route.params.page || 1
+    loadVehicleData(+route.params.page || 1, limit.value);
 });
 
 </script>
@@ -114,37 +108,9 @@ onMounted(() => {
       </div>
 
       <!-- PAGINATION -->
-      <div v-if="totalPages > 0" class="mt-10 flex items-center justify-center gap-3">
-        <div class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/80 backdrop-blur">
-          <span class="font-semibold">{{ page }}</span>
-          <span class="text-white/40">/</span>
-          <span class="font-semibold">{{ totalPages }}</span>
+        <div v-if="total > limit" class="mt-10 flex items-center justify-center gap-3">
+            <Pagination :total="total" entity="vehicle" :page="page" :limit="limit"/>
         </div>
-
-        <button
-          @click="prevPage"
-          :disabled="page === 1 || !isLoaded"
-          class="group relative inline-flex items-center justify-center overflow-hidden rounded-2xl
-                 border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-bold text-white/90 backdrop-blur-xl
-                 transition-all duration-300
-                 hover:-translate-y-0.5 hover:border-cyan-400/30 hover:bg-white/10
-                 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:translate-y-0"
-        >
-          <span class="relative flex items-center gap-2">← Назад</span>
-        </button>
-
-        <button
-          @click="nextPage"
-          :disabled="page === totalPages || !isLoaded"
-          class="group relative inline-flex items-center justify-center overflow-hidden rounded-2xl
-                 border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-bold text-white/90 backdrop-blur-xl
-                 transition-all duration-300
-                 hover:-translate-y-0.5 hover:border-rose-400/30 hover:bg-white/10
-                 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:translate-y-0"
-        >
-          <span class="relative flex items-center gap-2">Вперёд →</span>
-        </button>
-      </div>
     </div>
   </div>
 </template>

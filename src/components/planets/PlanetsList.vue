@@ -19,7 +19,6 @@ const loadPlanetData = async (page, limit) => {
     try {
         const response = await getPlanets(page, limit);
         items.value = response.data.results;
-        //totalPages.value = response.data.total_pages;
         total.value = response.data.total_records;
         console.log(items.value);
         isLoaded.value = true;
