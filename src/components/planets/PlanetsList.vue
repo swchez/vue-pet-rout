@@ -3,7 +3,9 @@ import { getPlanets } from '../../api/swapi.js';
 import { onMounted, ref, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import Pagination from '../Pagination.vue';
+import Modal from '../Modal.vue';
 
+const selectedItem = ref(null);
 const route = useRoute();
 const router = useRouter();
 const items = ref([]);
@@ -11,6 +13,16 @@ const page = ref(1);
 const total = ref();
 const limit = ref(10)
 const isLoaded = ref(false);
+const isModalOpen = ref(false);
+
+const openModal = (persone) => {
+    selectedItem.value = persone
+    isModalOpen.value = true;
+}
+const closeModal = () => {
+    isModalOpen.value = false;
+    selectedItem.value = null;
+}
 
 
 
@@ -50,7 +62,8 @@ onMounted(() => {
     <div class="pointer-events-none absolute inset-0">
       <div
         class="absolute -top-24 left-1/2 h-64 w-176 -translate-x-1/2 rounded-full
-               bg-linear-to-r from-cyan-500/20 via-sky-500/10 to-rose-500/15 blur-3xl animate-pulse"
+               bg-linear-to-r from-cyan-500/20 via-sky-500/10 to-rose-500/15
+               blur-3xl animate-pulse"
       ></div>
       <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-cyan-400/10 blur-3xl"></div>
     </div>
@@ -70,14 +83,36 @@ onMounted(() => {
 
       <!-- REAL CARDS -->
       <div v-else class="flex flex-wrap justify-center gap-6">
-        <div v-for="planet in items" :key="planet.uid" class="w-full sm:w-[320px]">
-          <div class="rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
+        <div
+          v-for="planet in items"
+          :key="planet.uid"
+          class="w-full sm:w-[320px]"
+        >
+          <div class="relative rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
+
+            <!-- Delete button -->
+            <button
+              class="absolute right-4 top-4 inline-flex h-8 w-8 items-center justify-center
+                     rounded-xl border border-white/10 bg-white/5
+                     text-white/70 transition
+                     hover:bg-rose-500/15 hover:text-white
+                     active:scale-[0.95]"
+              @click="openModal(planet)"
+              aria-label="Удалить карточку"
+            >
+              ✕
+            </button>
+
+            <!-- IMAGE -->
             <img
               src="../../assets/PlanetImage.png"
               alt="img planet"
-              class="mx-auto h-28 w-28 rounded-full object-cover"
+              class="mx-auto h-28 w-28 rounded-full object-cover
+                     border border-white/10 bg-black/30
+                     shadow-[0_18px_50px_-35px_rgba(0,0,0,0.95)]"
             />
 
+            <!-- TEXT -->
             <p v-if="planet.name" class="mt-4 text-base font-semibold text-white/90 text-center">
               {{ planet.name }}
             </p>
@@ -86,6 +121,7 @@ onMounted(() => {
               ID: {{ planet.uid }}
             </p>
 
+            <!-- ACTION -->
             <button
               class="group/btn relative mt-5 inline-flex w-full items-center justify-center overflow-hidden
                      rounded-2xl border border-white/10 bg-white/5 px-5 py-2.5
@@ -106,11 +142,44 @@ onMounted(() => {
             </button>
           </div>
         </div>
+
+        <!-- MODAL-->
+        <Modal
+          v-if="isModalOpen"
+          title="Удалить карточку?"
+          @close="closeModal"
+        >
+          <p class="text-white/80">
+            Точно удалить
+            <b class="text-white">{{ selectedItem?.name }}</b>?
+          </p>
+
+          <div class="mt-5 flex gap-3">
+            <button
+              class="flex-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5
+                     text-sm font-semibold text-white/80 transition
+                     hover:bg-white/10 active:scale-[0.98]"
+              @click="closeModal"
+            >
+              Отмена
+            </button>
+
+            <button
+              class="flex-1 rounded-2xl border border-rose-400/20 bg-rose-500/10 px-4 py-2.5
+                     text-sm font-semibold text-white/90 transition
+                     hover:bg-rose-500/20 active:scale-[0.98]"
+              @click="closeModal"
+            >
+              Удалить
+            </button>
+          </div>
+        </Modal>
+
       </div>
 
       <!-- PAGINATION -->
       <div v-if="total > limit" class="mt-10 flex items-center justify-center gap-3">
-        <Pagination :total="total" entity="planet" :page="page" :limit="limit"/>
+        <Pagination :total="total" entity="planet" :page="page" :limit="limit" />
       </div>
     </div>
   </div>
